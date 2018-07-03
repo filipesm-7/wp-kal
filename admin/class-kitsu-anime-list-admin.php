@@ -100,4 +100,64 @@ class Kitsu_Anime_List_Admin {
 
 	}
 
+    /**
+     * Register the administration menu for this plugin into the WordPress Dashboard menu.
+     *
+     * @since    1.0.0
+     */
+
+    public function add_plugin_admin_menu() {
+        add_options_page( 'Kitsu Anime List', 'Kitsu Anime List', 'manage_options', $this->plugin_name, array($this, 'display_plugin_setup_page')
+        );
+    }
+
+
+    /**
+     * Add settings action link to the plugins page.
+     *
+     * @since    1.0.0
+     */
+
+    public function add_action_links( $links ) {
+        $settings_link = array(
+            '<a href="' . admin_url( 'options-general.php?page=' . $this->plugin_name ) . '">' . __('Settings', $this->plugin_name) . '</a>',
+        );
+        return array_merge(  $settings_link, $links );
+
+    }
+
+    /**
+     * Render the settings page for this plugin.
+     *
+     * @since    1.0.0
+     */
+
+    public function display_plugin_setup_page() {
+        include_once( 'partials/kitsu-anime-list-admin-display.php' );
+    }
+
+    /**
+     * Store form data to DB.
+     *
+     * @since    1.0.0
+     */
+
+    public function options_update() {
+        register_setting($this->plugin_name, $this->plugin_name, array($this, 'validate'));
+    }
+
+    /**
+     * Validate admin form for this plugin.
+     *
+     * @since    1.0.0
+     */
+
+    public function validate($input) {
+        $valid = array();
+
+        //TODO load default and max items per page
+        $valid['items_per_page'] = ( $input['items_per_page'] > 1 && $input['items_per_page'] <= 5) ? $input['items_per_page'] : 4;
+
+        return $valid;
+    }
 }
