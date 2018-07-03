@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Kitsu Anime List
  * Plugin URI:        http://github.com/filipesm-7/kitsu-anime-list
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       Kitsu Anime List allows you to show the top anime listed on Kitsu's website.
  * Version:           1.0.0
  * Author:            Filipe Mendonça
  * Author URI:        http://github.com/filipesm-7
