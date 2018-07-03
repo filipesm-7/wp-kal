@@ -22,6 +22,24 @@
  */
 class Kitsu_Anime_List_Admin {
 
+    /**
+     * Maximum number of items shown on KAL plugin.
+     *
+     * @since    1.0.0
+     * @access   public
+     * @const      integer    MAX_ITEMS_SHOWN    Maximum number of items shown on KAL plugin.
+     */
+    const MAX_ITEMS_SHOWN = 5;
+
+    /**
+     * Default number of items shown on KAL plugin.
+     *
+     * @since    1.0.0
+     * @access   public
+     * @const      integer    MAX_ITEMS_SHOWN    Default number of items shown on KAL plugin.
+     */
+    const DEFAULT_ITEMS_SHOWN = 4;
+
 	/**
 	 * The ID of this plugin.
 	 *
@@ -155,8 +173,7 @@ class Kitsu_Anime_List_Admin {
     public function validate($input) {
         $valid = array();
 
-        //TODO load default and max items per page
-        $valid['items_per_page'] = ( $input['items_per_page'] > 1 && $input['items_per_page'] <= 5) ? $input['items_per_page'] : 4;
+        $valid['items_per_page'] = ( $input['items_per_page'] > 1 && $input['items_per_page'] <= self::MAX_ITEMS_SHOWN ) ? $input['items_per_page'] : self::DEFAULT_ITEMS_SHOWN;
 
         return $valid;
     }
