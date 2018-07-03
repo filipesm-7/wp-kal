@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * Provide a admin area view for the plugin
+ *
+ * This file is used to markup the admin-facing aspects of the plugin.
+ *
+ * @link       http://github.com/filipesm-7
+ * @since      1.0.0
+ *
+ * @package    Kitsu_Anime_List
+ * @subpackage Kitsu_Anime_List/admin/partials
+ */
+?>
+
+<!-- This file should primarily consist of HTML with a little bit of PHP. -->
