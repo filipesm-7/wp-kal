@@ -30,7 +30,7 @@ class Kitsu_Anime_List_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-
+        delete_option( 'kitsu-anime-list' );
 	}
 
 }
