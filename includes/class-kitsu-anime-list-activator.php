@@ -30,7 +30,9 @@ class Kitsu_Anime_List_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-        update_option( 'kitsu-anime-list', array( 'items_per_page' => Kitsu_Anime_List_Admin::DEFAULT_ITEMS_SHOWN ) );
+        $plugin_data = get_plugin_data( dirname( __FILE__ ) . '/../kitsu-anime-list.php' );
+
+        update_option( $plugin_data['TextDomain'], array( 'items_per_page' => Kitsu_Anime_List_Admin::DEFAULT_ITEMS_SHOWN ) );
 	}
 
 }

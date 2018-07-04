@@ -30,7 +30,9 @@ class Kitsu_Anime_List_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-        delete_option( 'kitsu-anime-list' );
+        $plugin_data = get_plugin_data( dirname( __FILE__ ) . '/../kitsu-anime-list.php' );
+
+        delete_option( $plugin_data['TextDomain'] );
 	}
 
 }
