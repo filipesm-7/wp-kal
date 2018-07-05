@@ -29,7 +29,7 @@ class Kitsu_Anime_List_Admin {
      * @access   public
      * @const      integer    MAX_ITEMS_SHOWN    Maximum number of items shown on KAL plugin.
      */
-    const MAX_ITEMS_SHOWN = 5;
+    const MAX_ITEMS_SHOWN = 10;
 
     /**
      * Default number of items shown on KAL plugin.
@@ -38,7 +38,7 @@ class Kitsu_Anime_List_Admin {
      * @access   public
      * @const      integer    MAX_ITEMS_SHOWN    Default number of items shown on KAL plugin.
      */
-    const DEFAULT_ITEMS_SHOWN = 4;
+    const DEFAULT_ITEMS_SHOWN = 5;
 
 	/**
 	 * The ID of this plugin.
