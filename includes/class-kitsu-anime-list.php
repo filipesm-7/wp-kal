@@ -180,6 +180,7 @@ class Kitsu_Anime_List {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
+        $this->loader->add_action( 'widgets_init', $plugin_public, 'kitsu_anime_list_register_widgets' );
 	}
 
 	/**

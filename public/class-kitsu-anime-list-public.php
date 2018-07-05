@@ -41,7 +41,7 @@ class Kitsu_Anime_List_Public {
 	private $version;
 
 	/**
-	 * Initialize the class and set its properties.
+	 *  Initialize the class, set it's properties and load widget class.
 	 *
 	 * @since    1.0.0
 	 * @param      string    $plugin_name       The name of the plugin.
@@ -52,6 +52,8 @@ class Kitsu_Anime_List_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
+		//load widget class
+        require_once dirname(__FILE__) . '/class.kitsu-anime-list-widget.php';
 	}
 
 	/**
@@ -99,5 +101,14 @@ class Kitsu_Anime_List_Public {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/kitsu-anime-list-public.js', array( 'jquery' ), $this->version, false );
 
 	}
+
+    /**
+     * Register the class widget
+     *
+     * @since    1.0.0
+     */
+    function kitsu_anime_list_register_widgets() {
+        register_widget( 'Kitsu_Anime_List_Widget' );
+    }
 
 }
