@@ -1,5 +1,7 @@
 <?php
 
+require_once dirname( __FILE__ ) . '/../includes/class-kitsu-anime-list-session-manager.php';
+
 /**
  *
  * This class defines implementation for querying Kitsu's API and return its data.
@@ -9,7 +11,7 @@
  * @subpackage Kitsu_Anime_List/public
  * @author     Filipe Mendonça <filipesm.7@gmail.com>
  */
-class Kitsu_API_Request extends WP_Http {
+class Kitsu_API_Request {
 
 
     /**
@@ -23,39 +25,59 @@ class Kitsu_API_Request extends WP_Http {
     const ENPOINT = "https://kitsu.io/api/edge/";
 
     /**
-     * Headers used for Kitsu API request.
+     * Kitsu anime query uri
      *
      * @since    1.0.0
-     * @access   private
-     * @var      Array    $headers   request headers
+     * @access   public
+     * @constant      string    API_ENDPOINT    Kitsu anime query uri
      *
      */
-    private $headers;
+    const ANIME_QUERY = "anime";
 
     /**
-     * Initialize the class and build request headers.
+     * Make a request to Kitsu API. Request is stored on client session data up to an hour
+     * and is used in subsequent page requests until it expires.
      *
      * @since    1.0.0
+     * @params   string    $request_type    Kitsu anime query uri
+     * @return   Array     API response data
+     * @throws Exception
      */
-	public function __construct() {
-        $this->build_request_headers();
-	}
+	public static function make_request( $request_type, $options= array() ) {
+        $session_manager = SessionManagerSingleton::get_instance();
+
+        $query_string = self::build_query_string( $options );
+        $url = self::ENPOINT . $request_type . '?' . $query_string;
+        
+        $result = $session_manager::get_client_session_data( $url );
+
+        if( /*empty( $result )*/ true ) {
+            $headers['Accept'] = 'application/vnd.api+json';
+            $headers['Content-Type'] = 'application/vnd.api+json';
+
+            $result = self::wp_http_request( $url, $headers );
+
+            $session_manager::save_client_session_data( $url, $result );
+        }
+
+        return $result;
+    }
 
     /**
-     * Retrieve from Kitsu API a list of anime with the best rating.
+     * Makes an http request using WP_Http class and returns and decodes it's body response.
      *
      * @since    1.0.0
+     * @params   string    $url         Request url
+     * @params   string    $headers     Request headers
+     *
+     * @return   Array     $result         Decoded API response data
      */
-	public function get_top_anime() {
+	public static function wp_http_request( $url, $headers ) {
 	    $args = array();
-	    $args['headers'] = $this->headers;
+	    $args['headers'] = $headers;
 
-	    /*TODO cache results*/
-
-	    /*TODO fetch filter params*/
-	    $uri = 'anime?sort=-averageRating&page[limit]=10&page[offset]=0';
-
-	    $result = $this->request( self::ENPOINT . $uri, $args );
+	    $wp_http = new WP_Http();
+	    $result = $wp_http->request( $url, $args );
 
 	    if( empty($result) || $result['response']['code'] != 200 ) {
 	        throw new Exception( "Invalid response from API!" );
@@ -65,12 +87,20 @@ class Kitsu_API_Request extends WP_Http {
     }
 
     /**
-     * Build Kitsu request headers.
+     * Generates the query string based on the widget options.
      *
      * @since    1.0.0
+     * @params   Array    $options         The widget options
+     *
+     * @return   string         The request query string
      */
-    public function build_request_headers() {
-	    $this->headers['Accept'] = 'application/vnd.api+json';
-	    $this->headers['Content-Type'] = 'application/vnd.api+json';
+    public static function build_query_string( $options ) {
+	    $params = array();
+	    $params['sort'] = '-averageRating';
+	    $params['page[limit]'] = $options['items_per_page'];
+	    $params['page[offset]'] = 0;
+
+	    return http_build_query( $params );
     }
+
 }
