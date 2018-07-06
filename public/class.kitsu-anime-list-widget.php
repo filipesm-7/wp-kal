@@ -27,7 +27,7 @@ class Kitsu_Anime_List_Widget extends WP_Widget {
      * @param      string    $plugin_name       The name of the plugin.
      * @param      string    $version    The version of this plugin.
      */
-	function __construct() {
+	public function __construct() {
 	    load_plugin_textdomain( $this->plugin_name );
 		
 		parent::__construct(
@@ -43,7 +43,7 @@ class Kitsu_Anime_List_Widget extends WP_Widget {
      * @since    1.0.0
      * @param      Array    $instance       .
      */
-	function form( $instance ) {
+	public function form( $instance ) {
 
 		if ( $instance && isset( $instance['title'] ) ) {
 			$title = $instance['title'];
@@ -63,7 +63,7 @@ class Kitsu_Anime_List_Widget extends WP_Widget {
      * @param      Array    $new_instance
      * @param      Array    $old_instance
      */
-	function update( $new_instance, $old_instance ) {
+	public function update( $new_instance, $old_instance ) {
 		$instance['title'] = strip_tags( $new_instance['title'] );
 		return $instance;
 	}
@@ -75,7 +75,7 @@ class Kitsu_Anime_List_Widget extends WP_Widget {
      * @param      Object    $args
      * @param      Object    $instance
      */
-	function widget( $args, $instance ) {
+	public function widget( $args, $instance ) {
         extract( $args );
 
         // WordPress core before_widget hook (always include )
