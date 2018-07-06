@@ -1,4 +1,29 @@
-/**
- * All of the CSS for your public-facing functionality should be
- * included in this file.
- */
+.kitsu-anime-list ul {
+    list-style-type: none;
+}
+
+.kitsu-anime-list ul li.item {
+    clear: both;
+}
+
+li.item img {
+    margin: 0 8px 10px 0;
+    max-width: 80px;
+    max-height: 100px;
+    float: left;
+}
+
+li.item a.title {
+    line-height: 17px;
+    padding-bottom: 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+li.item span {
+    font-weight: lighter;
+    font-size: small;
+    display: block;
+}
