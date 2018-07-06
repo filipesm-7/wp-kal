@@ -54,6 +54,7 @@ class Kitsu_Anime_List_Public {
 
 		//load widget class
         require_once dirname(__FILE__) . '/class.kitsu-anime-list-widget.php';
+        require_once dirname(__FILE__) . '/class.kitsu-api-request.php';
 	}
 
 	/**
