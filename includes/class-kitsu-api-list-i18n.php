@@ -9,8 +9,8 @@
  * @link       http://github.com/filipesm-7
  * @since      1.0.0
  *
- * @package    Kitsu_Anime_List
- * @subpackage Kitsu_Anime_List/includes
+ * @package    Kitsu_Api_List
+ * @subpackage Kitsu_Api_List/includes
  */
 
 /**
@@ -20,11 +20,11 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    Kitsu_Anime_List
- * @subpackage Kitsu_Anime_List/includes
+ * @package    Kitsu_Api_List
+ * @subpackage Kitsu_Api_List/includes
  * @author     Filipe Mendonça <filipesm.7@gmail.com>
  */
-class Kitsu_Anime_List_i18n {
+class Kitsu_Api_List_i18n {
 
 
 	/**
@@ -35,7 +35,7 @@ class Kitsu_Anime_List_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'kitsu-anime-list',
+			'kitsu-api-list',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);

@@ -6,8 +6,8 @@
  * @link       http://github.com/filipesm-7
  * @since      1.0.0
  *
- * @package    Kitsu_Anime_List
- * @subpackage Kitsu_Anime_List/includes
+ * @package    Kitsu_Api_List
+ * @subpackage Kitsu_Api_List/includes
  */
 
 /**
@@ -17,11 +17,11 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Kitsu_Anime_List
- * @subpackage Kitsu_Anime_List/includes
+ * @package    Kitsu_Api_List
+ * @subpackage Kitsu_Api_List/includes
  * @author     Filipe Mendonça <filipesm.7@gmail.com>
  */
-class Kitsu_Anime_List_Loader {
+class Kitsu_Api_List_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

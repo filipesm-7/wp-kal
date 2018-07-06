@@ -6,8 +6,8 @@
  * @link       http://github.com/filipesm-7
  * @since      1.0.0
  *
- * @package    Kitsu_Anime_List
- * @subpackage Kitsu_Anime_List/public
+ * @package    Kitsu_Api_List
+ * @subpackage Kitsu_Api_List/public
  */
 
 /**
@@ -16,11 +16,11 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the public-facing stylesheet and JavaScript.
  *
- * @package    Kitsu_Anime_List
- * @subpackage Kitsu_Anime_List/public
+ * @package    Kitsu_Api_List
+ * @subpackage Kitsu_Api_List/public
  * @author     Filipe Mendonça <filipesm.7@gmail.com>
  */
-class Kitsu_Anime_List_Public {
+class Kitsu_Api_List_Public {
 
 	/**
 	 * The ID of this plugin.
@@ -53,8 +53,8 @@ class Kitsu_Anime_List_Public {
 		$this->version = $version;
 
 		//load widget class
-        require_once dirname(__FILE__) . '/class.kitsu-anime-list-widget.php';
-        require_once dirname(__FILE__) . '/class.kitsu-api-request.php';
+        require_once dirname(__FILE__) . '/class-kitsu-api-list-widget.php';
+        require_once dirname(__FILE__) . '/class-kitsu-api-request.php';
 	}
 
 	/**
@@ -68,15 +68,15 @@ class Kitsu_Anime_List_Public {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Kitsu_Anime_List_Loader as all of the hooks are defined
+		 * defined in Kitsu_Api_List_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Kitsu_Anime_List_Loader will then create the relationship
+		 * The Kitsu_Api_List_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/kitsu-anime-list-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/kitsu-api-list-public.css', array(), $this->version, 'all' );
 
 	}
 
@@ -91,15 +91,15 @@ class Kitsu_Anime_List_Public {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Kitsu_Anime_List_Loader as all of the hooks are defined
+		 * defined in Kitsu_Api_List_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Kitsu_Anime_List_Loader will then create the relationship
+		 * The Kitsu_Api_List_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/kitsu-anime-list-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/kitsu-api-list-public.js', array( 'jquery' ), $this->version, false );
 
 	}
 
@@ -108,8 +108,8 @@ class Kitsu_Anime_List_Public {
      *
      * @since    1.0.0
      */
-    function kitsu_anime_list_register_widgets() {
-        register_widget( 'Kitsu_Anime_List_Widget' );
+    function kitsu_api_list_register_widgets() {
+        register_widget( 'Kitsu_Api_List_Widget' );
     }
 
 }

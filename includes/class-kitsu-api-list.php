@@ -9,8 +9,8 @@
  * @link       http://github.com/filipesm-7
  * @since      1.0.0
  *
- * @package    Kitsu_Anime_List
- * @subpackage Kitsu_Anime_List/includes
+ * @package    Kitsu_Api_List
+ * @subpackage Kitsu_Api_List/includes
  */
 
 /**
@@ -23,11 +23,11 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Kitsu_Anime_List
- * @subpackage Kitsu_Anime_List/includes
+ * @package    Kitsu_Api_List
+ * @subpackage Kitsu_Api_List/includes
  * @author     Filipe Mendonça <filipesm.7@gmail.com>
  */
-class Kitsu_Anime_List {
+class Kitsu_Api_List {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -35,7 +35,7 @@ class Kitsu_Anime_List {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Kitsu_Anime_List_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Kitsu_Api_List_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -72,7 +72,7 @@ class Kitsu_Anime_List {
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'kitsu-anime-list';
+		$this->plugin_name = 'kitsu-api-list';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -86,10 +86,10 @@ class Kitsu_Anime_List {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Kitsu_Anime_List_Loader. Orchestrates the hooks of the plugin.
-	 * - Kitsu_Anime_List_i18n. Defines internationalization functionality.
-	 * - Kitsu_Anime_List_Admin. Defines all hooks for the admin area.
-	 * - Kitsu_Anime_List_Public. Defines all hooks for the public side of the site.
+	 * - Kitsu_Api_List_Loader. Orchestrates the hooks of the plugin.
+	 * - Kitsu_Api_List_i18n. Defines internationalization functionality.
+	 * - Kitsu_Api_List_Admin. Defines all hooks for the admin area.
+	 * - Kitsu_Api_List_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -103,33 +103,33 @@ class Kitsu_Anime_List {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-kitsu-anime-list-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-kitsu-api-list-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-kitsu-anime-list-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-kitsu-api-list-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-kitsu-anime-list-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-kitsu-api-list-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-kitsu-anime-list-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-kitsu-api-list-public.php';
 
-		$this->loader = new Kitsu_Anime_List_Loader();
+		$this->loader = new Kitsu_Api_List_Loader();
 
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Kitsu_Anime_List_i18n class in order to set the domain and to register the hook
+	 * Uses the Kitsu_Api_List_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -137,7 +137,7 @@ class Kitsu_Anime_List {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Kitsu_Anime_List_i18n();
+		$plugin_i18n = new Kitsu_Api_List_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -152,7 +152,7 @@ class Kitsu_Anime_List {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Kitsu_Anime_List_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Kitsu_Api_List_Admin( $this->get_plugin_name(), $this->get_version() );
 
         $this->loader->add_action('admin_init', $plugin_admin, 'options_update');
 
@@ -175,12 +175,12 @@ class Kitsu_Anime_List {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Kitsu_Anime_List_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Kitsu_Api_List_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
-        $this->loader->add_action( 'widgets_init', $plugin_public, 'kitsu_anime_list_register_widgets' );
+        $this->loader->add_action( 'widgets_init', $plugin_public, 'kitsu_api_list_register_widgets' );
 	}
 
 	/**
@@ -207,7 +207,7 @@ class Kitsu_Anime_List {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Kitsu_Anime_List_Loader    Orchestrates the hooks of the plugin.
+	 * @return    Kitsu_Api_List_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;

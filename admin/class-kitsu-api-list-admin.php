@@ -6,8 +6,8 @@
  * @link       http://github.com/filipesm-7
  * @since      1.0.0
  *
- * @package    Kitsu_Anime_List
- * @subpackage Kitsu_Anime_List/admin
+ * @package    Kitsu_Api_List
+ * @subpackage Kitsu_Api_List/admin
  */
 
 /**
@@ -16,11 +16,11 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Kitsu_Anime_List
- * @subpackage Kitsu_Anime_List/admin
+ * @package    Kitsu_Api_List
+ * @subpackage Kitsu_Api_List/admin
  * @author     Filipe Mendonça <filipesm.7@gmail.com>
  */
-class Kitsu_Anime_List_Admin {
+class Kitsu_Api_List_Admin {
 
     /**
      * Maximum number of items shown on KAL plugin.
@@ -83,15 +83,15 @@ class Kitsu_Anime_List_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Kitsu_Anime_List_Loader as all of the hooks are defined
+		 * defined in Kitsu_Api_List_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Kitsu_Anime_List_Loader will then create the relationship
+		 * The Kitsu_Api_List_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/kitsu-anime-list-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/kitsu-api-list-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -106,15 +106,15 @@ class Kitsu_Anime_List_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Kitsu_Anime_List_Loader as all of the hooks are defined
+		 * defined in Kitsu_Api_List_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Kitsu_Anime_List_Loader will then create the relationship
+		 * The Kitsu_Api_List_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/kitsu-anime-list-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/kitsu-api-list-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
 
@@ -125,7 +125,7 @@ class Kitsu_Anime_List_Admin {
      */
 
     public function add_plugin_admin_menu() {
-        add_options_page( 'Kitsu Anime List', 'Kitsu Anime List', 'manage_options', $this->plugin_name, array($this, 'display_plugin_setup_page')
+        add_options_page( 'Kitsu Api List', 'Kitsu Api List', 'manage_options', $this->plugin_name, array($this, 'display_plugin_setup_page')
         );
     }
 
@@ -151,7 +151,7 @@ class Kitsu_Anime_List_Admin {
      */
 
     public function display_plugin_setup_page() {
-        include_once( 'partials/kitsu-anime-list-admin-display.php' );
+        include_once( 'partials/kitsu-api-list-admin-display.php' );
     }
 
     /**

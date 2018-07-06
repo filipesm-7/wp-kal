@@ -1,8 +1,8 @@
-.kitsu-anime-list ul {
+.kitsu-api-list ul {
     list-style-type: none;
 }
 
-.kitsu-anime-list ul li.item {
+.kitsu-api-list ul li.item {
     clear: both;
 }
 

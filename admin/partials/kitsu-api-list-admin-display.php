@@ -7,7 +7,7 @@ $options = get_option($this->plugin_name);
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 <div class="wrap">
-    <h2><?php _e('Kitsu Anime List customization', $this->plugin_name); ?></h2>
+    <h2><?php _e('Kitsu Api List customization', $this->plugin_name); ?></h2>
 
     <form method="post" name="kal_options" action="options.php">
         <?php settings_fields($this->plugin_name); ?>

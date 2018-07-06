@@ -8,8 +8,8 @@
  * request in the api
  *
  * @since      1.0.0
- * @package    Kitsu_Anime_List
- * @subpackage Kitsu_Anime_List/includes
+ * @package    Kitsu_Api_List
+ * @subpackage Kitsu_Api_List/includes
  * @author     Filipe Mendonça <filipesm.7@gmail.com>
  */
 class SessionManagerSingleton {
@@ -47,7 +47,7 @@ class SessionManagerSingleton {
      */
     public static function get_instance() {
         static $instance = null;
-        if( null === $instance ) {
+        if ( null === $instance ) {
             $instance = new static();
             $instance::start_client_session();
         }

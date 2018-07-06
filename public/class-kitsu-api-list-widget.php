@@ -5,11 +5,11 @@
  * This class defines all code necessary for showing widget form and data.
  *
  * @since      1.0.0
- * @package    Kitsu_Anime_List
- * @subpackage Kitsu_Anime_List/public
+ * @package    Kitsu_Api_List
+ * @subpackage Kitsu_Api_List/public
  * @author     Filipe Mendonça <filipesm.7@gmail.com>
  */
-class Kitsu_Anime_List_Widget extends WP_Widget {
+class Kitsu_Api_List_Widget extends WP_Widget {
 
     /**
      * The ID of this plugin.
@@ -18,7 +18,7 @@ class Kitsu_Anime_List_Widget extends WP_Widget {
      * @access   private
      * @var      string    $plugin_name    The ID of this plugin.
      */
-    private $plugin_name = "kitsu-anime-list";
+    private $plugin_name = "kitsu-api-list";
 
     /**
      * Widget data from the api.
@@ -41,7 +41,7 @@ class Kitsu_Anime_List_Widget extends WP_Widget {
 		
 		parent::__construct(
 			$this->plugin_name . '_widget',
-			__( 'Kitsu Anime List Widget' , $this->plugin_name),
+			__( 'Kitsu Api List Widget' , $this->plugin_name),
 			array( 'description' => __( 'Description test' , $this->plugin_name) )
 		);
 	}
@@ -61,7 +61,7 @@ class Kitsu_Anime_List_Widget extends WP_Widget {
 			$title = __( 'Title' , $this->plugin_name );
 		}
 
-        include( plugin_dir_path(__FILE__) . '../admin/partials/kitsu-anime-list-widget-admin-display.php' );
+        include( plugin_dir_path(__FILE__) . '../admin/partials/kitsu-api-list-widget-admin-display.php' );
 
 	}
 
@@ -92,7 +92,7 @@ class Kitsu_Anime_List_Widget extends WP_Widget {
 
         $list = $this->data;
 
-        include_once dirname(__FILE__) . '/partials/kitsu-anime-list-widget-display.php';
+        include_once dirname(__FILE__) . '/partials/kitsu-api-list-widget-display.php';
 
         // WordPress core after_widget hook (always include )
         echo $after_widget;

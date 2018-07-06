@@ -1,14 +1,14 @@
 <?php
 
-require_once dirname( __FILE__ ) . '/../includes/class-kitsu-anime-list-session-manager.php';
+require_once dirname( __FILE__ ) . '/../includes/class-kitsu-api-list-session-manager.php';
 
 /**
  *
  * This class defines implementation for querying Kitsu's API and return its data.
  *
  * @since      1.0.0
- * @package    Kitsu_Anime_List
- * @subpackage Kitsu_Anime_List/public
+ * @package    Kitsu_Api_List
+ * @subpackage Kitsu_Api_List/public
  * @author     Filipe Mendonça <filipesm.7@gmail.com>
  */
 class Kitsu_API_Request {
@@ -48,10 +48,10 @@ class Kitsu_API_Request {
 
         $query_string = self::build_query_string( $options );
         $url = self::ENPOINT . $request_type . '?' . $query_string;
-        
+
         $result = $session_manager::get_client_session_data( $url );
 
-        if( /*empty( $result )*/ true ) {
+        if ( empty( $result ) ) {
             $headers['Accept'] = 'application/vnd.api+json';
             $headers['Content-Type'] = 'application/vnd.api+json';
 
@@ -70,7 +70,7 @@ class Kitsu_API_Request {
      * @params   string    $url         Request url
      * @params   string    $headers     Request headers
      *
-     * @return   Array     $result         Decoded API response data
+     * @return   Array     $result      Decoded API response data
      */
 	public static function wp_http_request( $url, $headers ) {
 	    $args = array();
