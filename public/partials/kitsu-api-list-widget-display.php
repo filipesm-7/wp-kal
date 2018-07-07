@@ -1,3 +1,5 @@
+<?php $count_type = ( $instance['search_type'] == "anime" ) ? "episodeCount" : "volumeCount"; ?>
+
 <div class="kitsu-api-list">
     <h2 class="widget-title"><?php echo $instance['title']; ?></h2>
 
@@ -11,8 +13,11 @@
                     </a>
                 </p>
                 <a href="https://kitsu.io/<?php echo $instance['search_type']; ?>/<?php echo $item['attributes']['slug'] ?>" class="title" target="_blank"><?php echo $item['attributes']['canonicalTitle']; ?></a>
-                <span><?php echo $item['attributes']['subtype']; ?>, <?php echo ( $instance['search_type'] == "anime" ) ? $item['attributes']['episodeCount'] : $item['attributes']['volumeCount']; ?>, <?php echo $item['attributes']['status']; ?></span>
-                <span><?php echo $item['attributes']['averageRating']; ?> rating</span>
+                <span><?php echo $item['attributes']['subtype']; ?>,
+                    <?php echo ( !empty( $item['attributes'][$count_type] ) ) ? $item['attributes'][$count_type] : __( "n/a", $this->plugin_name ); ?>,
+                    <?php echo $item['attributes']['status']; ?>
+                </span>
+                <span><?php echo $item['attributes']['averageRating']; ?> <?php _e( 'rating', $this->plugin_name ) ?></span>
             </li>
         <?php endforeach; ?>
     </ul>
