@@ -107,6 +107,9 @@ class Kitsu_Api_List_Widget extends WP_Widget {
 	public function widget( $args, $instance ) {
         extract( $args );
 
+        // WordPress core before_widget hook (always include )
+        echo $before_widget;
+
         try {
             $list = $this->get_api_data( $instance );
 
@@ -114,17 +117,14 @@ class Kitsu_Api_List_Widget extends WP_Widget {
                 throw new Exception();
             }
 
-            // WordPress core before_widget hook (always include )
-            echo $before_widget;
-
-            include_once dirname(__FILE__) . '/partials/kitsu-api-list-widget-display.php';
-
-            // WordPress core after_widget hook (always include )
-            echo $after_widget;
+            include dirname(__FILE__) . '/partials/kitsu-api-list-widget-display.php';
 
         } catch ( Exception $e ) {
             echo _e( "No results were found.", $this->plugin_name );
         }
+
+        // WordPress core after_widget hook (always include )
+        echo $after_widget;
 	}
 
     /**
