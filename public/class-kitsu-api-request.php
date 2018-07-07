@@ -1,7 +1,5 @@
 <?php
 
-require_once dirname( __FILE__ ) . '/../includes/class-kitsu-api-list-session-manager.php';
-
 /**
  *
  * This class defines implementation for querying Kitsu's API and return its data.
@@ -17,50 +15,28 @@ class Kitsu_API_Request {
     /**
      * Kitsu API endpoint
      *
-     * @since    1.0.0
-     * @access   public
-     * @constant      string    API_ENDPOINT    Kitsu's API endpoint
+     * @since       1.0.0
+     * @access      public
+     * @constant    string    API_ENDPOINT    Kitsu's API endpoint
      *
     */
     const ENPOINT = "https://kitsu.io/api/edge/";
-
-    /**
-     * Kitsu anime query uri
-     *
-     * @since    1.0.0
-     * @access   public
-     * @constant      string    API_ENDPOINT    Kitsu anime query uri
-     *
-     */
-    const ANIME_QUERY = "anime";
 
     /**
      * Make a request to Kitsu API. Request is stored on client session data up to an hour
      * and is used in subsequent page requests until it expires.
      *
      * @since    1.0.0
-     * @params   string    $request_type    Kitsu anime query uri
-     * @return   Array     API response data
-     * @throws Exception
+     * @return   Array     widget options
+     * @throws   Exception
      */
-	public static function make_request( $request_type, $options= array() ) {
-        $session_manager = SessionManagerSingleton::get_instance();
+    public static function make_request( $url ) {
+        $headers['Accept'] = 'application/vnd.api+json';
+        $headers['Content-Type'] = 'application/vnd.api+json';
 
-        $query_string = self::build_query_string( $options );
-        $url = self::ENPOINT . $request_type . '?' . $query_string;
+        $result = self::wp_http_request( $url, $headers );
 
-        $result = $session_manager::get_client_session_data( $url );
-
-        if ( empty( $result ) ) {
-            $headers['Accept'] = 'application/vnd.api+json';
-            $headers['Content-Type'] = 'application/vnd.api+json';
-
-            $result = self::wp_http_request( $url, $headers );
-
-            $session_manager::save_client_session_data( $url, $result );
-        }
-
-        return $result;
+        return $result['data'];
     }
 
     /**
@@ -72,7 +48,7 @@ class Kitsu_API_Request {
      *
      * @return   Array     $result      Decoded API response data
      */
-	public static function wp_http_request( $url, $headers ) {
+    private static function wp_http_request( $url, $headers ) {
 	    $args = array();
 	    $args['headers'] = $headers;
 
@@ -80,10 +56,10 @@ class Kitsu_API_Request {
 	    $result = $wp_http->request( $url, $args );
 
 	    if( empty($result) || $result['response']['code'] != 200 ) {
-	        throw new Exception( "Invalid response from API!" );
+	        throw new Exception();
         }
 
-	    return json_decode( $result['body'], TRUE );
+        return json_decode( $result['body'], TRUE );
     }
 
     /**
@@ -96,11 +72,10 @@ class Kitsu_API_Request {
      */
     public static function build_query_string( $options ) {
 	    $params = array();
-	    $params['sort'] = '-averageRating';
+	    $params['sort'] = '-' . $options['sort_type'];
 	    $params['page[limit]'] = $options['items_per_page'];
 	    $params['page[offset]'] = 0;
 
-	    return http_build_query( $params );
+        return http_build_query( $params );
     }
-
 }

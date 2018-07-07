@@ -21,13 +21,22 @@ class Kitsu_Api_List_Widget extends WP_Widget {
     private $plugin_name = "kitsu-api-list";
 
     /**
-     * Widget data from the api.
+     * Session manager singleton.
      *
      * @since    1.0.0
      * @access   private
-     * @var      string    $plugin_name    The ID of this plugin.
+     * @var      SessionManagerSingleton    $session_manager    Session manager singleton.
      */
-    private $data;
+    private $session_manager;
+
+    /**
+     * Widget options.
+     *
+     * @since    1.0.0
+     * @access   private
+     * @var      Array    $options    Widget options.
+     */
+    private $options = array();
 
     /**
      * Initialize the class and parent class.
@@ -37,12 +46,14 @@ class Kitsu_Api_List_Widget extends WP_Widget {
 	public function __construct() {
 	    load_plugin_textdomain( $this->plugin_name );
 
-	    $this->load_api_data( new Kitsu_API_Request() );
-		
+	    $this->session_manager = SessionManagerSingleton::get_instance();
 		parent::__construct(
 			$this->plugin_name . '_widget',
-			__( 'Kitsu Api List Widget' , $this->plugin_name),
-			array( 'description' => __( 'Description test' , $this->plugin_name) )
+			__( 'Kitsu API List Widget' , $this->plugin_name),
+			array(
+			    'description' => __( 'Customize Kitsu API Widget' , $this->plugin_name ),
+                'customize_selective_refresh' => true
+            )
 		);
 	}
 
@@ -54,12 +65,17 @@ class Kitsu_Api_List_Widget extends WP_Widget {
      */
 	public function form( $instance ) {
 
-		if ( $instance && isset( $instance['title'] ) ) {
-			$title = $instance['title'];
-		}
-		else {
-			$title = __( 'Title' , $this->plugin_name );
-		}
+        // Set widget defaults
+        $defaults = array(
+            'title'             => __( 'Kitsu API List' , $this->plugin_name ),
+            'items_per_page'    => 5,
+            'search_type'       => 'anime',
+            'sort_type'         => 'averageRating',
+        );
+        $max_items_per_page = 20;
+
+        // Parse current settings with defaults
+        extract( wp_parse_args( ( array ) $instance, $defaults ) );
 
         include( plugin_dir_path(__FILE__) . '../admin/partials/kitsu-api-list-widget-admin-display.php' );
 
@@ -74,11 +90,15 @@ class Kitsu_Api_List_Widget extends WP_Widget {
      */
 	public function update( $new_instance, $old_instance ) {
 		$instance['title'] = strip_tags( $new_instance['title'] );
+		$instance['items_per_page'] = $new_instance['items_per_page'];
+        $instance['search_type'] = $new_instance['search_type'];
+        $instance['sort_type'] = $new_instance['sort_type'];
+
 		return $instance;
 	}
 
     /**
-     * Display widget on the website.
+     * Render widget on the website.
      *
      * @since    1.0.0
      * @param      Object    $args
@@ -87,33 +107,46 @@ class Kitsu_Api_List_Widget extends WP_Widget {
 	public function widget( $args, $instance ) {
         extract( $args );
 
-        // WordPress core before_widget hook (always include )
-        echo $before_widget;
+        try {
+            $list = $this->get_api_data( $instance );
 
-        $list = $this->data;
+            if( empty( $list ) ) {
+                throw new Exception();
+            }
 
-        include_once dirname(__FILE__) . '/partials/kitsu-api-list-widget-display.php';
+            // WordPress core before_widget hook (always include )
+            echo $before_widget;
 
-        // WordPress core after_widget hook (always include )
-        echo $after_widget;
+            include_once dirname(__FILE__) . '/partials/kitsu-api-list-widget-display.php';
+
+            // WordPress core after_widget hook (always include )
+            echo $after_widget;
+
+        } catch ( Exception $e ) {
+            echo _e( "No results were found.", $this->plugin_name );
+        }
 	}
 
     /**
-     * Load Kitsu API data.
+     * Load Kitsu list for the widget's options. Use stored results in session if they exist
+     * and haven't expired
      *
      * @since    1.0.0
-     * @param      Object    $args
-     * @param      Object    $instance
+     * @param      Array    $widget_options
      */
-	public function load_api_data(Kitsu_API_Request $api) {
-        $this->data = array();
+	public function get_api_data( $widget_options ) {
+	    $session_manager = $this->session_manager;
 
-	    try {
-            $result = $api->make_request( $api::ANIME_QUERY, get_option($this->plugin_name) );
-            $this->data = $result['data'];
-        } catch ( Exception $e ) {
-	        /* TODO treat exception as needed */
+        $query_string = Kitsu_API_Request::build_query_string( $widget_options );
+        $url = Kitsu_API_Request::ENPOINT . $widget_options['search_type'] . '?' . $query_string;
+
+        $list = $session_manager::get_client_session_data( $url );
+        if ( empty( $list ) ) {
+            $list = Kitsu_API_Request::make_request( $url );
+
+            //save list to session
+            $session_manager::save_client_session_data( $url, $list );
         }
+        return $list;
     }
-
 }
