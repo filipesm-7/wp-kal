@@ -64,5 +64,7 @@ register_deactivation_hook( __FILE__, 'deactivate_kitsu_api_list' );
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-kitsu-api-list.php';
 
+require plugin_dir_path( __FILE__ ) . 'includes/class-kitsu-api-list-session-manager.php';
+
 $plugin = new Kitsu_Api_List();
 $plugin->run();
