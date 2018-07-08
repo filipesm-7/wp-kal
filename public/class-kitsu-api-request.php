@@ -72,7 +72,10 @@ class Kitsu_API_Request {
      */
     public static function build_query_string( $options ) {
 	    $params = array();
-	    $params['sort'] = '-' . $options['sort_type'];
+
+	    $order_type = ( $options['sort_type'] == "desc" ) ? '-' : '';
+
+	    $params['sort'] = $order_type . $options['sort_type'];
 	    $params['page[limit]'] = $options['items_per_page'];
 	    $params['page[offset]'] = 0;
 

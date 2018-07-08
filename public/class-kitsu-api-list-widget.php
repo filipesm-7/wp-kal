@@ -71,6 +71,8 @@ class Kitsu_Api_List_Widget extends WP_Widget {
             'items_per_page'    => 5,
             'search_type'       => 'anime',
             'sort_type'         => 'averageRating',
+            'order_type'        => 'desc',
+            'trending'          => ''
         );
         $max_items_per_page = 20;
 
@@ -93,6 +95,8 @@ class Kitsu_Api_List_Widget extends WP_Widget {
 		$instance['items_per_page'] = $new_instance['items_per_page'];
         $instance['search_type'] = $new_instance['search_type'];
         $instance['sort_type'] = $new_instance['sort_type'];
+        $instance['order_type'] = $new_instance['order_type'];
+        $instance['trending'] = $new_instance['trending'];
 
 		return $instance;
 	}
@@ -117,6 +121,13 @@ class Kitsu_Api_List_Widget extends WP_Widget {
                 throw new Exception();
             }
 
+            $nr_items = count( $list );
+
+            //for some reason, Kitsu API trending search does not work with limit attribute so we cut the extra results
+            if ( $instance['trending'] == '1' && $nr_items > $instance['items_per_page'] ) {
+                array_splice( $list, 0, ( $nr_items - $instance['items_per_page'] ) );
+            }
+
             include dirname(__FILE__) . '/partials/kitsu-api-list-widget-display.php';
 
         } catch ( Exception $e ) {
@@ -138,7 +149,9 @@ class Kitsu_Api_List_Widget extends WP_Widget {
 	    $session_manager = $this->session_manager;
 
         $query_string = Kitsu_API_Request::build_query_string( $widget_options );
-        $url = Kitsu_API_Request::ENPOINT . $widget_options['search_type'] . '?' . $query_string;
+        $search_type = ( $widget_options['trending'] == '1' ) ? 'trending/' . $widget_options['search_type'] : $widget_options['search_type'];
+
+        $url = Kitsu_API_Request::ENPOINT . $search_type . '?' . $query_string;
 
         $list = $session_manager::get_client_session_data( $url );
         if ( empty( $list ) ) {

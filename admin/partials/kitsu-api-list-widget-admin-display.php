@@ -28,3 +28,14 @@
     <input class="widefat" id="<?php echo $this->get_field_id( 'sort_type' ); ?>" name="<?php echo $this->get_field_name( 'sort_type' ); ?>" type="radio" value="averageRating" <?php if ( $sort_type == "averageRating" ) echo 'checked="checked"' ?> /> <?php _e( 'Rating' , $this->plugin_name); ?>
     <input class="widefat" id="<?php echo $this->get_field_id( 'sort_type' ); ?>" name="<?php echo $this->get_field_name( 'sort_type' ); ?>" type="radio" value="popularityRank" <?php if ( $sort_type == "popularityRank" ) echo 'checked="checked"' ?> /> <?php _e( 'Popularity' , $this->plugin_name); ?>
 </p>
+
+<p>
+    <label for="<?php echo $this->get_field_id( 'order_type' ); ?>"><?php esc_html_e( 'Order type:' , $this->plugin_name); ?></label><br />
+    <input class="widefat" id="<?php echo $this->get_field_id( 'order_type' ); ?>" name="<?php echo $this->get_field_name( 'order_type' ); ?>" type="radio" value="asc" <?php if ( $order_type == "asc" ) echo 'checked="checked"' ?> /> <?php _e( 'Ascending' , $this->plugin_name); ?>
+    <input class="widefat" id="<?php echo $this->get_field_id( 'order_type' ); ?>" name="<?php echo $this->get_field_name( 'order_type' ); ?>" type="radio" value="desc" <?php if ( $order_type == "desc" ) echo 'checked="checked"' ?> /> <?php _e( 'Descending' , $this->plugin_name); ?>
+</p>
+
+<p>
+    <label for="<?php echo $this->get_field_id( 'trending' ); ?>"><?php esc_html_e( 'Trending:' , $this->plugin_name); ?></label><br />
+    <input class="widefat" id="<?php echo $this->get_field_id( 'trending' ); ?>" name="<?php echo $this->get_field_name( 'trending' ); ?>" type="checkbox" value="1" <?php if ( $trending == 1 ) echo 'checked="checked"' ?> />
+</p>
