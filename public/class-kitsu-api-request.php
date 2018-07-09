@@ -2,7 +2,8 @@
 
 /**
  *
- * This class defines implementation for querying Kitsu's API and return its data.
+ * This class defines implementation for querying Kitsu's API and return its data. For more information
+ * on the API, check their documentation at https://kitsu.docs.apiary.io .
  *
  * @since      1.0.0
  * @package    Kitsu_Api_List
@@ -17,17 +18,17 @@ class Kitsu_API_Request {
      *
      * @since       1.0.0
      * @access      public
-     * @constant    string    API_ENDPOINT    Kitsu's API endpoint
+     * @constant    string    ENDPOINT    Kitsu's API endpoint
      *
     */
     const ENPOINT = "https://kitsu.io/api/edge/";
 
     /**
-     * Make a request to Kitsu API. Request is stored on client session data up to an hour
-     * and is used in subsequent page requests until it expires.
+     * Make a request to Kitsu API based on the given url and set the request headers.
      *
      * @since    1.0.0
-     * @return   Array     widget options
+     * @params   string     $url	The request url.
+	 * @return   array              Decoded API response data
      * @throws   Exception
      */
     public static function make_request( $url ) {
@@ -40,13 +41,13 @@ class Kitsu_API_Request {
     }
 
     /**
-     * Makes an http request using WP_Http class and returns and decodes it's body response.
+     * Makes an http request using WP_Http class and returns its decoded response.
      *
      * @since    1.0.0
      * @params   string    $url         Request url
-     * @params   string    $headers     Request headers
-     *
-     * @return   Array     $result      Decoded API response data
+     * @params   array     $headers     Request headers
+     * @return   array     $result      Decoded API response data
+	 * @throws   Exception
      */
     private static function wp_http_request( $url, $headers ) {
 	    $args = array();
@@ -67,8 +68,7 @@ class Kitsu_API_Request {
      *
      * @since    1.0.0
      * @params   Array    $options         The widget options
-     *
-     * @return   string         The request query string
+     * @return   string         		   The request query string
      */
     public static function build_query_string( $options ) {
 	    $params = array();

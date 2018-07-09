@@ -1,5 +1,8 @@
 <?php
 
+//Load session manager class that will store api requests
+require plugin_dir_path( __FILE__ ) . '../includes/class-kitsu-api-list-session-manager.php';
+
 /**
  *
  * This class defines all code necessary for showing widget form and data.
@@ -30,16 +33,7 @@ class Kitsu_Api_List_Widget extends WP_Widget {
     private $session_manager;
 
     /**
-     * Widget options.
-     *
-     * @since    1.0.0
-     * @access   private
-     * @var      Array    $options    Widget options.
-     */
-    private $options = array();
-
-    /**
-     * Initialize the class and parent class.
+     * Initialize the class and parent class. Get the instance of the Session Manager class and store it.
      *
      * @since    1.0.0
      */
@@ -61,7 +55,7 @@ class Kitsu_Api_List_Widget extends WP_Widget {
      * Build the widget form.
      *
      * @since    1.0.0
-     * @param      Array    $instance       .
+     * @param    array    $instance       .
      */
 	public function form( $instance ) {
 
@@ -87,8 +81,8 @@ class Kitsu_Api_List_Widget extends WP_Widget {
      * Save widget form data.
      *
      * @since    1.0.0
-     * @param      Array    $new_instance
-     * @param      Array    $old_instance
+     * @param    array    $new_instance
+     * @param    array    $old_instance
      */
 	public function update( $new_instance, $old_instance ) {
 		$instance['title'] = strip_tags( $new_instance['title'] );
@@ -143,7 +137,8 @@ class Kitsu_Api_List_Widget extends WP_Widget {
      * and haven't expired
      *
      * @since    1.0.0
-     * @param      Array    $widget_options
+     * @param    array    $widget_options
+	 * @return   array    					List returned from Kitsu's API.
      */
 	public function get_api_data( $widget_options ) {
 	    $session_manager = $this->session_manager;

@@ -70,9 +70,8 @@ class SessionManagerSingleton {
      * Returns session data for the given key if it exists and has not expired yet.
      *
      * @since    1.0.0
-     * @param      string    $key
-     *
-     * @return   Array    Data saved on client session or an empty array.
+     * @param    string    $key	$_SESSION key.
+     * @return   array     Data saved on client session or an empty array.
      */
     public static function get_client_session_data( $key ) {
         return ( !empty( $_SESSION[$key] ) && $_SESSION[$key]['expire_date'] > ( time() ) ) ? $_SESSION[$key]['data'] : [];
@@ -82,9 +81,8 @@ class SessionManagerSingleton {
      * Saves session data for the given key and sets an one hour expire date.
      *
      * @since    1.0.0
-     * @param      string    $key
-     * @param      mixed    $data
-     * @return   Array    Data saved on client session or an empty array.
+     * @param    string    $key
+     * @param    mixed     $data
      */
     public static function save_client_session_data( $key, $data ) {
         $_SESSION[$key] = array(

@@ -13,8 +13,7 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet.
+ * Defines the plugin name, version.
  *
  * @package    Kitsu_Api_List
  * @subpackage Kitsu_Api_List/admin
@@ -52,15 +51,5 @@ class Kitsu_Api_List_Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
-	}
-
-	/**
-	 * Register the stylesheets for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_styles() {
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/kitsu-api-list-admin.css', array(), $this->version, 'all' );
 	}
 }
