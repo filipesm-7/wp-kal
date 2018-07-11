@@ -12,7 +12,7 @@
  * @subpackage Kitsu_Api_List/includes
  * @author     Filipe Mendonça <filipesm.7@gmail.com>
  */
-class SessionManagerSingleton {
+class Kitsu_Api_List_Session_Manager_Singleton {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -20,7 +20,7 @@ class SessionManagerSingleton {
 	 *
 	 * @since    1.0.0
 	 * @access   public
-	 * @var      SessionManagerSingleton    $instance    Stores the class instance.
+	 * @var      Kitsu_Api_List_Session_Manager_Singleton    $instance    Stores the class instance.
 	 */
 	public static $instance;
 
@@ -43,7 +43,7 @@ class SessionManagerSingleton {
      * Return class instance.
      *
      * @since    1.0.0
-     * @return   SessionManagerSingleton    This class instance.
+     * @return   Kitsu_Api_List_Session_Manager_Singleton    This class instance.
      */
     public static function get_instance() {
         static $instance = null;

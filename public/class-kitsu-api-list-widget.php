@@ -28,7 +28,7 @@ class Kitsu_Api_List_Widget extends WP_Widget {
      *
      * @since    1.0.0
      * @access   private
-     * @var      SessionManagerSingleton    $session_manager    Session manager singleton.
+     * @var      Kitsu_Api_List_Session_Manager_Singleton    $session_manager    Session manager singleton.
      */
     private $session_manager;
 
@@ -40,7 +40,7 @@ class Kitsu_Api_List_Widget extends WP_Widget {
 	public function __construct() {
 	    load_plugin_textdomain( $this->plugin_name );
 
-	    $this->session_manager = SessionManagerSingleton::get_instance();
+	    $this->session_manager = Kitsu_Api_List_Session_Manager_Singleton::get_instance();
 		parent::__construct(
 			$this->plugin_name . '_widget',
 			__( 'Kitsu API List Widget' , $this->plugin_name),
